@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -10,19 +11,26 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  FocusNode myfocus = FocusNode();
-  String starState_image = 'assets/images/estrela_vazia.png';
+  double _avaliacao = 0;
+  int _ratingBarMode = 0; //1
 
-  void _atualizaEstrela(String value) {
-    if (value == 'assets/images/estrela_vazia.png') {
-      setState(() {
-        starState_image = 'assets/images/estrela_cheia.png';
-      });
-    } else {
-      setState(() {
-        starState_image = 'assets/images/estrela_vazia.png';
-      });
-    }
+  Widget _ratingBar(int mode) {
+    return RatingBar(
+      initialRating: 0,
+      allowHalfRating: false,
+      itemCount: 5,
+      ratingWidget: RatingWidget(
+        full: Image.asset('assets/images/estrela_cheia.png'),
+        half: Image.asset('assets/images/estrela_cheia.png'),
+        empty: Image.asset('assets/images/estrela_vazia.png'),
+      ),
+      itemPadding: EdgeInsets.symmetric(horizontal: 4),
+      onRatingUpdate: (avaliacao) {
+        setState(() {
+          _avaliacao = avaliacao;
+        });
+      },
+    );
   }
 
   @override
@@ -33,19 +41,30 @@ class _HomePageState extends State<HomePage> {
                 padding: EdgeInsets.all(16),
                 margin: EdgeInsets.all(16),
                 child: Column(children: [
-                  Image.asset("assets/images/livro.png", fit: BoxFit.fill),
-                  Text('Como foi a ajuda do tutor?',
-                      style: TextStyle(
-                          fontSize: 34,
-                          fontWeight: FontWeight.bold,
-                          fontFamily: 'LondrinaSolid')),
-                  IconButton(
-                    splashRadius: 34,
-                    icon: Image.asset(starState_image),
-                    iconSize: 50,
-                    onPressed: () => _atualizaEstrela(starState_image),
-                    focusNode: myfocus,
-                  )
+                  Image.asset(
+                    "assets/images/livro.png",
+                    fit: BoxFit.fill,
+                    alignment: Alignment.center,
+                  ),
+                  Text(
+                    'Como foi a ajuda do tutor?',
+                    style: TextStyle(
+                        fontSize: 34,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'LondrinaSolid'),
+                    textAlign: TextAlign.center,
+                  ),
+                  _ratingBar(_ratingBarMode),
+                  Text(
+                    "Avaliação: $_avaliacao",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  ),
+                  FloatingActionButton.extended(
+                    label: Text('Confirmar'),
+                    backgroundColor: Colors.grey,
+                    foregroundColor: Colors.white,
+                    onPressed: () => {},
+                  ),
                 ]))));
   }
 }
