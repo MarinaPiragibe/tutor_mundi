@@ -100,3 +100,6 @@ flutter:
     - family: LondrinaSolid
       fonts:
         - asset: assets/fonts/LondrinaSolid-Black.ttf
+    - family: WorkSans
+      fonts:
+        - asset: assets/fonts/WorkSans-Regular.ttf

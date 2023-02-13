@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,6 +11,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   double _avaliacao = 0;
   int _ratingBarMode = 0; //1
+  bool _isButtonDisabled = true;
 
   Widget _ratingBar(int mode) {
     return RatingBar(
@@ -29,6 +28,11 @@ class _HomePageState extends State<HomePage> {
         setState(() {
           _avaliacao = avaliacao;
         });
+        if (_avaliacao == 0) {
+          _isButtonDisabled = true;
+        } else {
+          _isButtonDisabled = false;
+        }
       },
     );
   }
@@ -59,11 +63,27 @@ class _HomePageState extends State<HomePage> {
                     "Avaliação: $_avaliacao",
                     style: TextStyle(fontWeight: FontWeight.bold),
                   ),
+                  TextButton(
+                    child: Text(
+                      'PULAR',
+                      style: TextStyle(
+                          color: Colors.blue,
+                          fontFamily: 'WorkSans',
+                          fontWeight: FontWeight.bold),
+                    ),
+                    onPressed: null,
+                  ),
                   FloatingActionButton.extended(
-                    label: Text('Confirmar'),
+                    label: Text('CONFIRMAR',
+                        style: TextStyle(
+                            fontFamily: 'WorkSans',
+                            fontWeight: FontWeight.bold)),
                     backgroundColor: Colors.grey,
-                    foregroundColor: Colors.white,
-                    onPressed: () => {},
+                    onPressed: _isButtonDisabled
+                        ? null
+                        : () {
+                            print(_avaliacao);
+                          },
                   ),
                 ]))));
   }
