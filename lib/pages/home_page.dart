@@ -53,6 +53,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         body: Center(
             child: Container(
+                height: (MediaQuery.of(context).size.height),
+                width: (MediaQuery.of(context).size.width),
                 padding: const EdgeInsets.all(16),
                 margin: const EdgeInsets.all(16),
                 child: Column(children: [
@@ -74,10 +76,10 @@ class _HomePageState extends State<HomePage> {
                     "Avaliação: $_avaliacao",
                     style: const TextStyle(fontWeight: FontWeight.bold),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    crossAxisAlignment: CrossAxisAlignment.end,
+                  Expanded(
+                      child: Row(
                     children: [
+                      Spacer(),
                       const TextButton(
                         onPressed: null,
                         child: Text(
@@ -105,7 +107,7 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ),
                     ],
-                  ),
+                  )),
                 ]))));
   }
 }
